@@ -1,0 +1,469 @@
+html {
+  box-sizing: border-box;
+  line-height: 1.25;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", SimSun, sans-serif;
+  font-weight: 400;
+  color: #000;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+input {
+  padding: 5px 8px;
+}
+
+.cf::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.main-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-container > section {
+  width: 100%;
+}
+
+.mini-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  margin-left: auto;
+  width: 86%;
+}
+
+.mini-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-bottom: 1px solid rgb(233, 233, 233);
+}
+
+/*=====================================================================*/
+
+.mini-header > span {
+  width: 20%;
+}
+
+.main {
+  width: 98%;
+  margin: 50px 0 10px 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main > .allbooksinfo {
+  display: block !important;
+}
+
+.main > div:nth-child(n + 1) {
+  display: none;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 0.5em 0.5em 0.5em;
+  border-collapse: collapse;
+}
+
+/*==============================*/
+/* header start section */
+
+.header-action {
+  height: 100%;
+  vertical-align: middle;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-content {
+  padding: 7px 0;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 130px;
+  box-shadow: -1px 1px 7px 1px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: -10px;
+  top: 48px;
+}
+
+.edit-profil a,
+.sing-out a {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 15px;
+  font-weight: 300px;
+  color: rgb(32, 36, 26);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-decoration: none;
+  justify-content: space-around;
+}
+
+.edit-profil a:hover,
+.sing-out a:hover {
+  background-color: #f1f1f1;
+  color: rgb(117, 222, 253);
+}
+
+.header-action:hover .dropdown .dropdown-content {
+  display: block;
+}
+
+.role {
+  padding: 0 7px;
+}
+
+/*=====================================================================*/
+
+.fixced--class {
+  width: 14%;
+  height: 100vh;
+  position: fixed;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  background-color: white;
+  border-right: solid 1px #e6e6e6;
+  overflow: auto;
+  min-height: 100vh;
+}
+
+.logout {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+}
+
+.img-logo {
+  border-radius: 50%;
+}
+
+/*================================================================*/
+
+ul {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+li {
+  margin-top: 10px;
+  padding: 5px;
+  padding-left: 20px !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 56px;
+  line-height: 56px;
+  font-weight: 500;
+  font-size: 17px;
+  white-space: nowrap;
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+}
+
+li:hover {
+  background-color: rgb(236 245 255);
+}
+
+.liTags {
+  color: rgb(135 199 255);
+  background-color: rgb(236 245 255);
+  border-right: 2px solid rgb(15, 95, 243);
+}
+
+li > p {
+  width: 100%;
+  padding: 5px !important;
+  word-spacing: 3px;
+  letter-spacing: 1px;
+  min-height: 50px;
+  transition: all 1s ease;
+}
+li > section {
+  width: 70%;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+li > span {
+  margin-left: 7px;
+  vertical-align: middle;
+}
+
+/*=====================================================================*/
+
+mini-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.bars {
+  width: 20%;
+}
+
+.bars > i {
+  cursor: pointer;
+  margin-right: 35px;
+}
+
+/*=====================================================================*/
+
+/* user table */
+.tableUser {
+  width: 100%;
+}
+
+.tableUser > table {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.thUserInfo {
+  text-align: center;
+}
+.thUserInfo:nth-child(1),
+.thUserInfo:nth-child(2) {
+  width: 18%;
+}
+.thUserInfo:nth-child(3) {
+  width: 13%;
+}
+.thUserInfo:nth-child(4) {
+  width: 11%;
+}
+.thUserInfo:nth-child(n + 5) {
+  width: 8%;
+}
+.thUserInfo:last-child {
+  width: 17%;
+  text-align: left;
+}
+
+.lastTh {
+  height: 100%;
+  padding-right: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lastTh > span {
+  height: 100%;
+  width: 35%;
+  font-size: 13px;
+}
+
+.lastTh > div {
+  width: 40%;
+  height: 100%;
+  color: rgb(44, 141, 252);
+  font-weight: 350;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lastTh > div > span:hover {
+  color: rgb(2, 35, 223);
+  font-weight: 400px;
+}
+
+/* table the end*/
+/*=====================================================================*/
+/* Admin controller start page */
+
+.thControllRole:nth-child(1),
+.thControllRole:nth-child(2) {
+  width: 20%;
+}
+
+.thControllRole:nth-child(3),
+.thControllRole:nth-child(4) {
+  width: 14%;
+}
+
+.thControllRole:nth-child(5) {
+  width: 32%;
+}
+
+.roleuser {
+  width: 50%;
+  display: inline-block;
+}
+
+.roleform {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Admin controller the end page */
+/*=====================================================================*/
+/* all books start page */
+
+.img-column {
+  display: flex;
+  flex-direction: row !important;
+  padding-bottom: 25px;
+  font-size: 14px;
+}
+
+.card {
+  display: inline-block;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 18%;
+}
+
+.card {
+  margin-left: 20px;
+}
+
+.card:hover {
+  box-shadow: 1px 8px 16px 8px rgba(0, 0, 0, 0.2);
+}
+
+.img-container {
+  padding: 8px 16px;
+}
+.auth {
+  display: flex;
+  flex-direction: row;
+}
+/* all books the end page */
+/*=====================================================================*/
+/* Add book  */
+
+.addBookForm {
+  width: 96%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.addBookForm > div:nth-child(1) {
+  width: 40%;
+}
+
+.addBookForm > div:nth-child(2) {
+  width: 50%;
+}
+.addBookForm_div1_2 {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.addBookForm_div1_2 > div:nth-child(1) {
+  width: 30%;
+}
+
+.addBookForm_div1_2 > div:nth-child(2) {
+  width: 60%;
+}
+
+.addBookForm_div2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.addBookForm_div2:nth-child(5) {
+  margin-top: 10px;
+}
+
+.addBookForm_div1 > .addBookForm_div2:nth-child(2),
+.addBookForm_div1 > .addBookForm_div2:nth-child(4) {
+  margin-top: 15px;
+}
+
+.addBookForm > div:nth-child(1),
+.addBookForm > div:nth-child(2) {
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+}
+
+.addBookForm > div > input {
+  margin-bottom: 10px;
+}
+
+#status,
+#category {
+  padding: 7px;
+}
+
+textarea {
+  width: 100% !important;
+  min-height: 120px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.addBookForm > div > div:nth-child(2) {
+  margin-top: 15px;
+}
+
+.addBookForm > div > div:nth-child(3) {
+  margin-top: 8px;
+}
+
+.addBookForm > div > div > button {
+  padding: 5px;
+  width: 100%;
+}
+
+/* Add book the end */

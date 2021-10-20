@@ -1,0 +1,9 @@
+{
+    "SECRET_KEY": "secretPrivate_key",
+    "db": "privite_db_key",
+    "PORT": "3000",
+    "login": "",
+    "account": "",
+    "src": "",
+    "css": ""
+}

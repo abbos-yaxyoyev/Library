@@ -1,0 +1,9 @@
+{
+    "SECRET_KEY": "secret",
+    "db": "mongodb://localhost:27017/Library",
+    "PORT": "3000",
+    "login": "./js/login.js",
+    "account": "./js/account.js",
+    "css": "./css/style.css",
+    "src": "./js/general.js"
+}
