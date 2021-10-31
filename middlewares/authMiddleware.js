@@ -23,7 +23,6 @@ function checkUser(req, res, next) {
 const checkPermission = (role) => {
   return async (req, res, next) => {
     try {
-      console.log(role);
       if (role.includes(req.user.role)) {
         next()
       } else {

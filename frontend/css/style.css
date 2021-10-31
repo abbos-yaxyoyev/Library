@@ -88,13 +88,9 @@ input {
   flex-direction: column;
 }
 
-.main > .allbooksinfo {
-  display: block !important;
-}
-
-.main > div:nth-child(n + 1) {
+/* .main > div:nth-child(n) {
   display: none;
-}
+} */
 
 table,
 th,
@@ -290,7 +286,7 @@ mini-content {
 
 .lastTh {
   height: 100%;
-  padding-right: 5px;
+  padding-right: 3px;
   display: flex;
   justify-content: space-between;
 }
@@ -298,15 +294,15 @@ mini-content {
 .lastTh > span {
   height: 100%;
   width: 35%;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .lastTh > div {
-  width: 40%;
+  width: 43%;
   height: 100%;
   color: rgb(44, 141, 252);
-  font-weight: 350;
-  font-size: 15px;
+  font-weight: 300;
+  font-size: 13px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -352,33 +348,83 @@ mini-content {
 /* all books start page */
 
 .img-column {
-  display: flex;
-  flex-direction: row !important;
-  padding-bottom: 25px;
+  display: grid;
+  grid-template-columns: 235px 235px 235px 235px;
+  grid-row-gap: 25px;
+  grid-column-gap: 40px;
+  margin-left: 20px;
+  padding-bottom: 15px;
   font-size: 14px;
 }
 
 .card {
+  position: relative;
   display: inline-block;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 18%;
 }
 
-.card {
-  margin-left: 20px;
+.img-card,
+.img-card > img {
+  width: 235px;
+  height: 225px;
 }
 
 .card:hover {
   box-shadow: 1px 8px 16px 8px rgba(0, 0, 0, 0.2);
 }
 
-.img-container {
+.img-container,
+.button-container {
   padding: 8px 16px;
 }
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fa-star-and-crescent {
+  position: absolute;
+  right: 0;
+  padding: 0;
+  background-color: rgb(8, 8, 8);
+  border-radius: 50%;
+  border: 0.8px solid rgb(245, 4, 4);
+  color: rgb(254, 255, 254);
+  margin: 2px;
+}
+
+.fa-star-and-crescent:hover {
+  background: #232323;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 15px #208a02,
+    0 0 20px #49ff18, 0 0 30px #56fd28;
+}
+
 .auth {
   display: flex;
   flex-direction: row;
+}
+
+.content {
+  display: none;
+  z-index: 5;
+  width: 350px;
+  height: 200px;
+  overflow: hidden;
+  position: absolute;
+  background-color: aliceblue;
+  margin-top: -200px;
+  padding: 10px;
+}
+
+.content > .fa-times {
+  display: flex;
+  border-radius: 20%;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  margin: 0 0 5px 10px;
 }
 /* all books the end page */
 /*=====================================================================*/
@@ -467,3 +513,69 @@ textarea {
 }
 
 /* Add book the end */
+/* pagenation section start */
+
+.pagenation-ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.4rem;
+}
+
+.pagenation-li {
+  margin: 0;
+  padding: 0 !important;
+  background-color: rgb(5, 116, 5);
+}
+
+.pagenation-li > p {
+  padding: 7px 10px !important;
+}
+
+/* category page start */
+
+.categoryForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.categoryForm > div {
+  display: inline-block;
+  position: relative;
+  width: 30%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+}
+
+.categoryForm > div > input {
+  width: 95%;
+  padding: 5px;
+  border: 0;
+}
+
+.categoryForm > div > input:focus {
+  outline: none;
+}
+
+.categoryForm > div > button {
+  position: absolute;
+  font-size: 20px !important;
+  right: 10px;
+  top: 5px;
+  bottom: 5px;
+  padding: 5px 0 5px 5px;
+  margin: 0;
+  border: 0;
+  background-color: #fff;
+}
+
+.tableCategory {
+  width: 70% !important;
+  margin: 0 auto !important;
+  font-size: 13px;
+}

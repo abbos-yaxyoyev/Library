@@ -4,7 +4,7 @@ const router = Router();
 const { getAllBooks } = require('../controllers/genaralPage')
 
 
-router.get('/', getAllBooks)
+router.get('/:pageSize/:currentPage', getAllBooks)
 
 module.exports = {
     general: router

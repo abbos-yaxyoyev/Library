@@ -12,10 +12,10 @@ const {
 
 
 router.post('/', upload.any(), createBook);
-router.get('/userBooks', userAllBooks)
+router.get('/userBooks/:pageSize/:currentPage', userAllBooks)
 router.delete('/:id', deleteOneBook)
 router.get('/:id', findOneBook)
-router.put('/:id', editBook)
+router.put('/:id', upload.any(), editBook)
 
 module.exports = {
     book: router

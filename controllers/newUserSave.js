@@ -66,29 +66,34 @@ async function deleteOneUser(req, res) {
 }
 
 async function allUser(req, res) {
+    const { role } = req.user;
+    let { pageSize, currentPage } = req.params;
+    pageSize = parseInt(pageSize);
+    currentPage = parseInt(currentPage);
     try {
+        const count = await UserModel.count({});
         const allUser = await UserModel.aggregate([
-            {
-                $lookup:
-                {
-                    from: 'favoritebooks',
-                    localField: '_id',
-                    foreignField: 'user_id',
-                    as: 'favorite'
-                }
-            },
-            {
-                $unwind: "$favorite"
-            },
             // {
             //     $lookup:
             //     {
-            //         from: 'books',
+            //         from: 'favoritebooks',
             //         localField: '_id',
             //         foreignField: 'user_id',
-            //         as: 'book'
+            //         as: 'favorite'
             //     }
             // },
+            // {
+            //     $unwind: "$favorite"
+            // },
+            {
+                $lookup:
+                {
+                    from: 'books',
+                    localField: '_id',
+                    foreignField: 'user_id',
+                    as: 'book'
+                }
+            },
             {
                 $project: {
                     name: 1,
@@ -96,18 +101,19 @@ async function allUser(req, res) {
                     email: 1,
                     role: 1,
                     date: 1,
-                    // bookNumber: {
-                    //     $size: '$book'
-                    // },
-                    favoriteBookNumber: {
-                        $size: "$favorite.favoriteBooks"
-                    }
+                    bookNumber: {
+                        $size: '$book'
+                    },
+                    // favoriteBookNumber: {
+                    //     $size: "$favorite.favoriteBooks"
+                    // }
                 }
-            }
+            },
+            { $skip: (currentPage - 1) * pageSize },
+            { $limit: pageSize }
         ]);
 
-        // res.status(201).send(JSON.stringify(allUser));
-        res.status(201).send(allUser);
+        res.status(201).send({ allUser, count, currentpage: currentPage, role });
     }
     catch (error) {
         console.log(error);

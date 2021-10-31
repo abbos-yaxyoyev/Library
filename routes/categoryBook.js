@@ -6,7 +6,7 @@ const {
 } = require('../controllers/categoryBookControllers')
 
 
-router.get('/', getAllCategory);
+router.get('/:pageSize/:currentPage', getAllCategory);
 
 module.exports = {
     category: router

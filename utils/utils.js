@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi')
-Joi.objectId = require('joi-objectid')(Joi)
+Joi.objectId = require('joi-objectid')(Joi);
 
 async function validateBook(book) {
     const bookValidated = Joi.object({

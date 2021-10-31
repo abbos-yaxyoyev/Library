@@ -4,11 +4,8 @@ const { BooksModel } = require('../models/booksModels');
 async function createBook(req, res) {
 
     console.log(req.files);
-    console.log(req.body.bookname);
-    console.log(typeof req.body.bookname);
-    console.log(typeof req.body.category_id);
-    console.log(typeof req.body.author);
-    console.log(typeof req.body.quantity);
+    let str = req.files[0].path.split('\\');
+    let url = str[1] + "\\" + str[2];
 
     const obj = {
         user_id: req.user.user_id,
@@ -19,8 +16,9 @@ async function createBook(req, res) {
         status: req.body.status,
         quantity: req.body.quantity,
         bookname: req.body.bookname,
-        urlImg: req.files[0].path
+        urlImg: url
     }
+
     try {
         const { error } = await validateBook(obj);
         if (error) {
@@ -42,10 +40,21 @@ async function createBook(req, res) {
 
 async function userAllBooks(req, res) {
     const { user_id } = req.user;
+    let { pageSize, currentPage } = req.params;
     try {
-        const books = await BooksModel.find({ user_id });
+        pageSize = parseInt(pageSize);
+        currentPage = parseInt(currentPage);
+        const count = await BooksModel.count({ user_id });
+
+        const books = await BooksModel
+            .find(
+                { user_id },
+                { date: 0, user_id: 0, __v: 0 }
+            )
+            .skip((currentPage - 1) * pageSize)
+            .limit(pageSize)
         errorBookNotFound(res, books);
-        res.status(201).send(books);
+        res.status(201).send({ books, count, currentpage: currentPage });
     }
     catch (error) {
         console.log(error);
@@ -82,9 +91,24 @@ async function findOneBook(req, res) {
 async function editBook(req, res) {
     const { user_id } = req.user;
     const { id } = req.params;
-    const { category_id, author, describtion, ISBN, status, quantity } = req.body;
+    const { category_id, author, describtion, ISBN, status, quantity, bookname } = req.body;
+    console.log(req.files);
+    let str = req.files[0].path.split('\\');
+    let url = str[1] + "\\" + str[2];
+    console.log(id);
+    const obj = {
+        user_id,
+        category_id,
+        author,
+        describtion,
+        ISBN,
+        status,
+        quantity,
+        bookname,
+        urlImg: url
+    }
     try {
-        const { error } = await validateBook(req.body);
+        const { error } = await validateBook(obj);
         if (error) {
             let errorMessage = error.details[0].message;
             return res.status(404).send(errorMessage)
@@ -94,8 +118,11 @@ async function editBook(req, res) {
             {
                 $set: {
                     category_id: category_id,
+                    user_id: user_id,
                     author: author,
                     describtion: describtion,
+                    bookname: bookname,
+                    urlImg: url,
                     ISBN: ISBN,
                     status: status,
                     quantity: quantity
@@ -108,7 +135,7 @@ async function editBook(req, res) {
         );
 
         errorBookNotFound(res, book);
-        res.status(201).send(book);
+        res.status(200).send(book);
     }
     catch (error) {
         console.log(error);

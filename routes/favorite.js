@@ -3,14 +3,14 @@ const router = Router()
 
 const {
     pushFavorites,
-    deletFavoriteBook,
+    deleteFavoriteBook,
     allFavoriteBook
 } = require('../controllers/favoriteBook')
 
 
-router.delete('/:id', deletFavoriteBook);
-router.get('/', allFavoriteBook);
-router.post('/', pushFavorites);
+router.delete('/:id', deleteFavoriteBook);
+router.get('/:pageSize/:currentPage', allFavoriteBook);
+router.post('/:id', pushFavorites);
 
 module.exports = {
     favorite: router

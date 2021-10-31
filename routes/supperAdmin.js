@@ -5,7 +5,7 @@ const { roleUser, roleAlluser } = require('../controllers/roleUser');
 
 
 router.patch('/:id', roleUser);
-router.patch('/', roleUser);
+router.get('/:pageSize/:currentPage', roleAlluser);
 
 module.exports = {
     supperAdmin: router

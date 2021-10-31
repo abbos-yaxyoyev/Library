@@ -17,9 +17,9 @@ async function createFavoriteBook(res, user_id) {
 
 async function pushFavorites(req, res) {
     const { user_id } = req.user;
-    const { book_id } = req.body;
+    const { id } = req.params;
 
-    let bookId = mongoose.Types.ObjectId(book_id);
+    let bookId = mongoose.Types.ObjectId(id);
     let userId = mongoose.Types.ObjectId(user_id);
 
     try {
@@ -29,14 +29,13 @@ async function pushFavorites(req, res) {
             { $unwind: "$favoriteBooks" },
             { $match: { 'favoriteBooks.book_id': bookId } }
         ]);
-
-
+        console.log('favoritebook0: ', favoritebook);
         if (favoritebook[0]) {
-            console.log('favoritebook :', favoritebook);
+            console.log('favoritebook1:', favoritebook);
             return res.status(401).send({ message: 'already save favorite book id' });
         }
 
-        await FavoriteBookModel.findOneAndUpdate(
+        let favorite = await FavoriteBookModel.findOneAndUpdate(
             { user_id: userId },
             {
                 $push: {
@@ -47,6 +46,8 @@ async function pushFavorites(req, res) {
                 }
             }
         );
+
+        console.log('favorite: ', favorite);
 
         return res.status(200).send({
             message: 'save favorite book id'
@@ -59,7 +60,7 @@ async function pushFavorites(req, res) {
 
 }
 
-async function deletFavoriteBook(req, res) {
+async function deleteFavoriteBook(req, res) {
     const { user_id } = req.user;
     const { id } = req.params;
 
@@ -100,15 +101,18 @@ async function deletFavoriteBook(req, res) {
 
 async function allFavoriteBook(req, res) {
     const { user_id } = req.user;
+    let { pageSize, currentPage } = req.params;
+    pageSize = parseInt(pageSize);
+    currentPage = parseInt(currentPage);
     let userId = mongoose.Types.ObjectId(user_id);
-
-
     try {
+
+        const countFavoriteBook = await FavoriteBookModel.find({ user_id });
+
         const allfavorite = await FavoriteBookModel.aggregate([
             {
                 $match: { user_id: userId }
             },
-            // { $unwind: "$favoriteBooks" },
             {
                 $lookup:
                 {
@@ -125,12 +129,15 @@ async function allFavoriteBook(req, res) {
                     __v: 0,
                     user_id: 0,
                     'book.createdAt': 0,
-                    'book.__v': 0
+                    'book.__v': 0,
                 }
-            }
+            },
+            { $unwind: "$book" },
+            { $skip: (currentPage - 1) * pageSize },
+            { $limit: pageSize }
         ]);
-
-        res.status(200).send(allfavorite);
+        // console.log('count: ', countFavoriteBook[0]);
+        res.status(200).send({ allfavorite, count: countFavoriteBook[0].favoriteBooks.length, currentpage: currentPage });
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: error.message });
@@ -140,7 +147,7 @@ async function allFavoriteBook(req, res) {
 
 module.exports = {
     createFavoriteBook,
-    deletFavoriteBook,
+    deleteFavoriteBook,
     allFavoriteBook,
     pushFavorites
 }
