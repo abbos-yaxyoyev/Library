@@ -48,9 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             error_output.textContent = 'Login or Password is incorrect';
                         } else
                             if (body) {
-                                console.log(body);
                                 localStorage.setItem('token', body);
-                                // window.location.assign('./index.html')
+                                window.location.href = url + "/index";
                             }
             })
             .catch(err => console.log(err.message));

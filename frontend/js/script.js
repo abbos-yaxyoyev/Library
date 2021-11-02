@@ -29,7 +29,7 @@ window.addEventListener("DOMContentLoaded", function () {
     f_book_li.addEventListener('click', () => { favoriteBooks(1, 1) });
     c_book_li.addEventListener('click', () => { category(1, 1) });
     all_users_li.addEventListener('click', () => { allUserInfo(1, 1) });
-    add_book_li.addEventListener('click', openBook);
+    add_book_li.addEventListener('click', () => { openBook(1, 1) });
 
     function ultarget(e) {
         console.log(e.target.nodeName);
@@ -267,7 +267,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
         form.innerHTML = `<form class="categoryForm">
                             <div>
-                                <input id="categoryInput" type="text" placeholder="Add category name"><button id="1" class="categoryButton fas fa-2x fa-plus"></button>
+                                <input id="categoryInput" type="text" placeholder="Add category name"><button  class="categoryButton fas fa-2x fa-plus"></button>
                             </div>
                             <div>
                                 <input id="categorySearch" type="text" placeholder="Choose a category name"><button id="categorySearchButton" class="fas fa-2x fa-search"></button>
@@ -323,6 +323,9 @@ window.addEventListener("DOMContentLoaded", function () {
         let addcategoryButton = document.querySelector('.categoryButton');
         addcategoryButton.addEventListener('click', addCategory);
 
+        let searchcategoryButton = document.querySelector("#categorySearchButton");
+        searchcategoryButton.addEventListener('click', search_name_category);
+
         let ul = document.querySelector('.pagenation-ul');
         ul.addEventListener('click', pagenationCategory);
         table.addEventListener('click', bookButton);
@@ -331,7 +334,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
     async function addCategory(e) {
         e.preventDefault();
-
         if (e.target.id) {
             return edit_category(e.target.id)
         }
@@ -351,7 +353,7 @@ window.addEventListener("DOMContentLoaded", function () {
         })
             .then(res => res.json())
             .then((data) => {
-                if (table.childElementCount < pageSize) category(1, 1);
+                if (table.childElementCount < pageSize + 1) category(1, 1);
             })
             .catch(err => console.log(err));
         addcategory.value = null
@@ -387,6 +389,7 @@ window.addEventListener("DOMContentLoaded", function () {
         addcategoryButton.removeAttribute('id');
     }
 
+
     async function delete_category(id) {
 
         await fetch(`${url}/api/admin/category/${id}`, {
@@ -399,15 +402,43 @@ window.addEventListener("DOMContentLoaded", function () {
         })
             .then(res => res.json())
             .then((data) => {
-                let {count, }
+                let { book, count, index } = data;
+                countData = count;
+                if (Math.ceil(countData / pageSize) > Math.ceil(index / pageSize) && Math.ceil(index / pageSize) > 1) {
+                    return category(Math.ceil(index / pageSize), Math.ceil(index / pageSize) - 1)
+                } else if (Math.ceil(countData / pageSize) == Math.ceil(index / pageSize) > 2) {
+                    return category(Math.ceil(countData / pageSize), Math.ceil(countData / pageSize) - 2)
+                } else if (Math.ceil(index / pageSize) == 1) {
+                    return category(Math.ceil(index / pageSize), Math.ceil(index / pageSize))
+                }
             })
             .catch(err => console.log(err));
-        addcategory.value = null
-        addcategoryButton.removeAttribute('id');
+    }
+
+    async function search_name_category(e) {
+        e.preventDefault();
+        let searchcategory = document.querySelector("#categorySearch");
+        let table = document.querySelector('.tableCategory');
+
+        await fetch(`${url}/api/admin/category/${name}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data);
+
+            })
+            .catch(err => console.log(err));
+        searchcategory.value = null
     }
 
 
-    async function openBook() {
+    async function openBook(currentPage, target) {
         display('addBook')
         editdata.innerHTML = null;
 
@@ -463,7 +494,7 @@ window.addEventListener("DOMContentLoaded", function () {
         const select = document.querySelector('#category');
         const addBookButton = document.querySelector('#addBookButton');
         let str = '<option disabled selected value></option>';
-        await fetch(`${url}/api/category`, {
+        await fetch(`${url}/api/category/${pageSize}/${currentPage}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -471,15 +502,17 @@ window.addEventListener("DOMContentLoaded", function () {
         })
             .then(res => res.json())
             .then((data) => {
-                data.forEach(function (element, index, arrayNode) {
+                const { categories, count, currentpage, role } = data;
+                categories.forEach(function (element, index, arrayNode) {
                     str += `<option data="${element._id} value="${element.value}">${element.category}</option>`
                 })
 
             })
             .catch(err => console.log(err));
 
-        addBookButton.addEventListener('click', addBook);
         select.innerHTML = str;
+        console.log(select);
+        addBookButton.addEventListener('click', addBook);
 
     }
 

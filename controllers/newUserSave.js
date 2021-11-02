@@ -73,18 +73,18 @@ async function allUser(req, res) {
     try {
         const count = await UserModel.count({});
         const allUser = await UserModel.aggregate([
-            // {
-            //     $lookup:
-            //     {
-            //         from: 'favoritebooks',
-            //         localField: '_id',
-            //         foreignField: 'user_id',
-            //         as: 'favorite'
-            //     }
-            // },
-            // {
-            //     $unwind: "$favorite"
-            // },
+            {
+                $lookup:
+                {
+                    from: 'favoritebooks',
+                    localField: '_id',
+                    foreignField: 'user_id',
+                    as: 'favorite'
+                }
+            },
+            {
+                $unwind: "$favorite"
+            },
             {
                 $lookup:
                 {
@@ -104,9 +104,9 @@ async function allUser(req, res) {
                     bookNumber: {
                         $size: '$book'
                     },
-                    // favoriteBookNumber: {
-                    //     $size: "$favorite.favoriteBooks"
-                    // }
+                    favoriteBookNumber: {
+                        $size: "$favorite.favoriteBooks"
+                    }
                 }
             },
             { $skip: (currentPage - 1) * pageSize },

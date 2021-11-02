@@ -88,6 +88,34 @@ async function findOneBook(req, res) {
     }
 }
 
+async function findSearchBook(req, res) {
+    let { name } = req.params;
+    console.log(name);
+    // const { user_id } = req.user;
+    try {
+        const book = await BooksModel.find({ category_id: new RegExp('.*' + name + '.*', "i") });
+        errorBookNotFound(res, book);
+        console.log(book);
+        res.status(201).send(book);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function searchNameBook(req, res) {
+    let { name } = req.params;
+    try {
+        const book = await BooksModel.find({ bookname: new RegExp('.*' + name + '.*', "i") });
+        errorBookNotFound(res, book);
+        res.status(201).send(book);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+
 async function editBook(req, res) {
     const { user_id } = req.user;
     const { id } = req.params;
@@ -145,6 +173,8 @@ async function editBook(req, res) {
 
 
 module.exports = {
+    findSearchBook,
+    searchNameBook,
     createBook,
     userAllBooks,
     deleteOneBook,

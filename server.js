@@ -41,7 +41,7 @@ app.use('/index', express.static(path.resolve(__dirname, 'frontend')));
 app.use('/login', express.static(path.resolve(__dirname, "public")));
 app.use('/account', express.static(path.resolve(__dirname, "public")));
 
-app.use('/api/category', checkUser, checkPermission(['supperAdmin', 'admin']), category);
+app.use('/api/category', checkUser, checkPermission(['supperAdmin', 'admin', 'user']), category);
 app.use("/api/favorite", checkUser, checkPermission(['supperAdmin', 'admin', 'user']), favorite);
 app.use('/api/comment', checkUser, checkPermission(['supperAdmin', 'admin', 'user']), comment);
 app.use('/api/book', checkUser, checkPermission(['supperAdmin', 'admin', 'user']), book);

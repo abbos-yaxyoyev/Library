@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 if (body && body != 404 && body != 400) {
                     localStorage.setItem('token', body);
-                    // window.location.assign('./index.html')
+                    window.location.href = url + "/index";
                 }
             })
             .catch(err => console.log(err.message));

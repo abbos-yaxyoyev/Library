@@ -38,6 +38,19 @@ async function getAllCategory(req, res) {
     }
 }
 
+async function searchNameCategory(req, res) {
+    let { name } = req.params;
+    console.log(name);
+    // name = `.*${name}.*`
+    try {
+        const categories = await CategoryBookModel.find({ category: new RegExp('.*' + name + '.*', "i") })
+        errorBookNotFound(res, categories);
+        res.status(201).send(categories);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 async function editCategory(req, res) {
     const { id } = req.params;
     const { category } = req.body;
@@ -69,11 +82,19 @@ async function editCategory(req, res) {
 
 async function deleteOneCategory(req, res) {
     const { id } = req.params;
+    let index = 0
     try {
+        const array = await CategoryBookModel.find({});
+        array.forEach((value, i, array) => {
+            if (value._id == id) {
+                index = i
+                return;
+            }
+        })
         const book = await CategoryBookModel.deleteOne({ _id: id });
-        const count = await CategoryBookModel.count({_id});
+        const count = await CategoryBookModel.count({});
         errorBookNotFound(res, book);
-        res.status(201).send({book, count});
+        res.status(201).send({ book, count, index });
     }
     catch (error) {
         console.log(error);
@@ -81,6 +102,7 @@ async function deleteOneCategory(req, res) {
 }
 
 module.exports = {
+    searchNameCategory,
     deleteOneCategory,
     getAllCategory,
     createCategory,
